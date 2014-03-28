@@ -1,0 +1,28 @@
+#ifndef BANKDB_H
+#define BANKDB_H
+#include<QString>
+
+struct Location {
+    QString name;
+    QString zipCode;
+    Qstring city;
+    QString strit;
+    QString NIP;
+    QString branza;
+};
+
+struct przedmiot {
+    QString nazwa;
+    uint ilosc;
+    float cena;
+    float cenaJednostkowa;
+};
+
+class BankDB : public Database
+{
+public:
+    BankDB();
+    
+};
+
+#endif // BANKDB_H
