@@ -4,6 +4,11 @@ Database::Database()
 {
 }
 
+Database::~Database()
+{
+
+}
+
 bool Database::connect(const char *nameDB)
 {
     db = QSqlDatabase::addDatabase(nameDB);
