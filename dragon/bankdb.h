@@ -1,6 +1,10 @@
 #ifndef BANKDB_H
 #define BANKDB_H
 #include<QString>
+#include<QDebug>
+#include<QtSql/QSqlError>
+#include<QtSql/QSqlRecord>
+
 #include "database.h"
 
 
@@ -51,7 +55,7 @@ public:
     bool addLocation(Location location);
     bool addTransaction(Transaction transaction);
 
-    bool selectAccount();
+    bool selectAccount(Account * accounts);
 };
 
 #endif // BANKDB_H

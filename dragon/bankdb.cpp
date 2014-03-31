@@ -1,3 +1,4 @@
+
 #include "bankdb.h"
 
 BankDB::BankDB()
@@ -19,7 +20,7 @@ BankDB::~BankDB()
 
 bool BankDB::createTable()
 {
-    if (!db.isOpen()) if(!connect("bank.db")) return false;
+    if (!db.isOpen()) if(!connect("./bank.db")) return false;
 
 
     QSqlQuery query(db);
@@ -28,7 +29,7 @@ bool BankDB::createTable()
         result = query.exec("CREATE TABLE IF NOT EXISTS Account ( ID INTEGER PRIMARY KEY, name TEXT , number TEXT, value REAL");
 
 
-    return false;
+    return result;
 }
 
 bool BankDB::addAccount(Account account)
@@ -53,7 +54,7 @@ bool BankDB::addTransaction(Transaction transaction)
 
 bool BankDB::selectAccount(Account * accounts)
 {
-    QSqlQuery gry(db);
+    QSqlQuery qry(db);
     qry.prepare( "SELECT * FROM Account" );
      if( !qry.exec() )
        qDebug() << qry.lastError();
