@@ -2,11 +2,13 @@ QT += widgets
 
 HEADERS    = echowindow.h \
              pluginsloader.h \
-             iplugin.h
+             iplugin.h \
+    loger.h
 
 SOURCES    = echowindow.cpp \
              pluginsloader.cpp \
-             main.cpp
+             main.cpp \
+    loger.cpp
 
 
 TARGET     = dragon

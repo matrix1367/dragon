@@ -1,6 +1,6 @@
 #! [0]
 TEMPLATE    = subdirs
-SUBDIRS	    = echowindow \
+SUBDIRS	    = application \
 	      plugin
 #! [0]
 
