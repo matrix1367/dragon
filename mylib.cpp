@@ -15,8 +15,7 @@ extern "C" void destroy_object( MyLib* object )
 
 MyLib::MyLib()
 {
-  x = 20;
-  m_name = "test";
+  m_name = "te	sss";
 }
 
 void MyLib::getName(string& name)
@@ -24,9 +23,9 @@ void MyLib::getName(string& name)
 	name = m_name;
 }
 
-void MyLib::DoSomething()
+void MyLib::moduleMain()
 {
-  cout<<x<<endl;
+	std::cout << "start plugin" << std::endl;
 }
 
 MyLib::~MyLib()

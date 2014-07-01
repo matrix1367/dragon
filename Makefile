@@ -7,6 +7,4 @@ mylib: mylib.cpp
 	g++ -fPIC -shared mylib.cpp -o mylib.so
 	
 clear:
-	rm -rfv *.o
-	rm mylib.so
-	rm dragon
+	rm -rfv *.o	

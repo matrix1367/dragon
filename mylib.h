@@ -1,21 +1,21 @@
 #ifndef __MYCLASS_H__
 #define __MYCLASS_H__
 
+#include "IPluhin.h"
+
 #include <string>
 
-class MyLib
+class MyLib : public IPlugin
 {
 public:
 	MyLib();
-	virtual ~MyLib();
+	~MyLib();
 
-	virtual void getName(std::string & name);
-	virtual void DoSomething();
-
+	void getName(std::string & name);
+	void moduleMain();
 protected:
 private:
 	std::string m_name;
-  int x;
 };
 
 #endif
