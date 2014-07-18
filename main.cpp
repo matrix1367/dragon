@@ -1,26 +1,46 @@
-#include <dlfcn.h>
+#include <execinfo.h>
 #include <iostream>
 #include <string>
-#include "IPluhin.h"
-#include "mylib.h"
+#include <stdio.h>
+#include "Plugins/IPlugin.h"
+#include "CDAControler.h"
+#include "WindowGUI.h"
+
 
 using namespace std;
 
+void printCallstack( int callstackSize = 20 ){
+    void * buffer[ callstackSize ];
+    char ** backtraceStrings;
+
+    int const traceCount = backtrace( buffer, callstackSize );
+    if( traceCount == 0 ){
+        return;
+    }
+
+    backtraceStrings = backtrace_symbols( buffer, traceCount );
+
+    if( ! backtraceStrings ){
+        return;
+    }
+
+    for( size_t i = 0 ; i < traceCount ; ++ i ){
+        std::cout << backtraceStrings[ i ] << std::endl;
+    }
+
+    delete [] backtraceStrings;
+}
+
 int main(int argc, char **argv)
 {
-  void* handle = dlopen("./mylib.so", RTLD_LAZY);
+	//printCallstack();
+	printf("[%s] : (%d)\n" , __FUNCTION__ , __LINE__);
+	CDAControler::getInstance().menagerPlugin.load();
+	if (CDASetting::getInstance().autoRun)
+	{
+		//CDAControler::getInstance().menagerPlugin.modulesMain(argc, argv);
+	}
 
-  IPlugin* (*create)();
-  void (*destroy)(IPlugin*);
-
-  create = (IPlugin* (*)())dlsym(handle, "create_object");
-  destroy = (void (*)(IPlugin*))dlsym(handle, "destroy_object");
-
-  IPlugin* myClass = (IPlugin*)create();
-
-  string nazwa = "";
-
-  myClass->getName(nazwa);
-  cout << "name :" << nazwa << endl;
-  destroy( myClass );
+	WindowGUI gui;
+	gui.WindowMain(argc, argv);
 }
