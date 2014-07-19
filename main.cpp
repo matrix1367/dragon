@@ -38,7 +38,7 @@ int main(int argc, char **argv)
 	CDAControler::getInstance().menagerPlugin.load();
 	if (CDASetting::getInstance().autoRun)
 	{
-		//CDAControler::getInstance().menagerPlugin.modulesMain(argc, argv);
+		CDAControler::getInstance().menagerPlugin.modulesMain(argc, argv);
 	}
 
 	WindowGUI gui;

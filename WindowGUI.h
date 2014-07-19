@@ -16,6 +16,7 @@ public:
 	WindowGUI();
 	virtual ~WindowGUI();
 	int WindowMain(int argc, char **argv);
+
 protected:
 private:
 	int width;
