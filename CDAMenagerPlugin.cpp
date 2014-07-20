@@ -27,17 +27,6 @@ CDAMenagerPlugin::~CDAMenagerPlugin()
 		delete *it_plugins;
 	}
 }
-//
-//void CDAMenagerPlugin::openPlugin(const std::string& fileName, IPlugin * plugin)
-//{
-//	void* handle = dlopen(fileName.c_str(), RTLD_LAZY);
-//	IPlugin* (*create)();
-//	create = (IPlugin* (*)())dlsym(handle, "create_object");
-//
-//	 plugin = ((IPlugin*)create());
-//
-//
-//}
 
 void CDAMenagerPlugin::load()
 {
@@ -58,7 +47,6 @@ void CDAMenagerPlugin::load()
 			m_plugins.push_back(plugin);
 		}
 	}
-
 }
 
 void CDAMenagerPlugin::load(const std::string& fileName)
@@ -99,4 +87,9 @@ void CDAMenagerPlugin::modulesMain(int argc, char **argv)
 	{
 		(*it_plugins)->moduleMain(argc, argv);
 	}
+}
+
+void CDAMenagerPlugin::getPlugins(std::list<IPlugin*>& plugins)
+{
+	plugins = m_plugins;
 }

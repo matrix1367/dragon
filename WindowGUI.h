@@ -8,6 +8,7 @@
 #ifndef WINDOWGUI_H_
 #define WINDOWGUI_H_
 #include <string>
+#include <gtk/gtk.h>
 
 #include "IGUI.h"
 
@@ -22,6 +23,8 @@ private:
 	int width;
 	int height;
 	std::string titleName;
+	 GtkWidget *m_window;
+	void initTextView();
 };
 
 #endif /* WINDOWGUI_H_ */

@@ -15,7 +15,7 @@ extern "C" void destroy_object( MyLib* object )
 
 MyLib::MyLib()
 {
-  m_name = "te dupa	sss";
+  m_name = "MyLib";
 }
 
 void MyLib::getName(string& name)

@@ -18,6 +18,7 @@ public:
 	void load();
 	void remove(const std::string& namePlugin);
 	void modulesMain(int argc, char **argv);
+	void getPlugins(std::list<IPlugin*>& plugins);
 protected:
 private:
 	std::list<IPlugin*> m_plugins;
