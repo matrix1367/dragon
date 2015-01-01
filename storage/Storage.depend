@@ -1,0 +1,89 @@
+# depslib dependency file v1.0
+1419169769 source:e:\projekty\dragon-network\storage\main.cpp
+
+1419249442 source:e:\projekty\dragon-network\storage\cdstorage.cpp
+	"CDStorage.h"
+	"DataBaseSQLite3.h"
+
+1419209155 e:\projekty\dragon-network\storage\cdstorage.h
+	<string>
+	"CDStorageTools.h"
+	"IDataBase.h"
+
+1419195884 e:\projekty\dragon-network\storage\cdstoragetools.h
+	<vector>
+	<string>
+
+1419251504 e:\projekty\dragon-network\storage\idatabase.h
+	<string>
+	<vector>
+
+1419250591 source:e:\projekty\dragon-network\storage\databasesqlite3.cpp
+	"DataBaseSQLite3.h"
+	"CDStorageTools.h"
+	<cstdio>
+	<Shlwapi.h>
+
+1419251503 e:\projekty\dragon-network\storage\databasesqlite3.h
+	"sqlite3.h"
+	"IDataBase.h"
+
+1419169767 e:\projekty\dragon-network\lib\sqlite\sqlite3.h
+	<stdarg.h>
+
+1419174933 source:e:\projekty\dragon-network\storage\src\idatatable.cpp
+	"IDataTable.h"
+
+1419193061 e:\projekty\dragon-network\storage\include\idatatable.h
+	"CDStorageTools.h"
+	<string>
+
+1419195884 e:\projekty\dragon-network\storage\\cdstoragetools.h
+	<vector>
+	<string>
+
+1419174933 source:e:\projekty\dragon\storage\src\idatatable.cpp
+	"IDataTable.h"
+
+1419193061 e:\projekty\dragon\storage\include\idatatable.h
+	"CDStorageTools.h"
+	<string>
+
+1419195884 e:\projekty\dragon\storage\include\cdstoragetools.h
+	<vector>
+	<string>
+
+1419309476 source:e:\projekty\dragon\storage\src\cdstorage.cpp
+	"CDStorage.h"
+	"DataBaseSQLite3.h"
+	<cstdio>
+
+1419309400 e:\projekty\dragon\storage\include\cdstorage.h
+	<string>
+	"CDStorageTools.h"
+	"IDataBase.h"
+
+1419309526 e:\projekty\dragon\storage\include\idatabase.h
+	<string>
+	<vector>
+
+1419309373 e:\projekty\dragon\storage\include\databasesqlite3.h
+	"sqlite3.h"
+	"IDataBase.h"
+
+1419169767 e:\projekty\dragon\lib\sqlite\sqlite3.h
+	<stdarg.h>
+
+1419308791 source:e:\projekty\dragon\storage\src\databasesqlite3.cpp
+	"DataBaseSQLite3.h"
+	"CDStorageTools.h"
+	<cstdio>
+	<Shlwapi.h>
+	"CDDebug.h"
+
+1419307303 e:\projekty\dragon\storage\cddebug.h
+	<cstdio>
+
+1419307303 e:\projekty\dragon\lib\\cddebug.h
+	<cstdio>
+

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="dragon-shop" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="../bin/Debug/dragon-shop" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="../Storage/include" />
+					<Add directory="../testlib" />
+					<Add directory="../storage" />
+					<Add directory="../Lib/" />
+					<Add directory="include" />
+					<Add directory="dragon-shop" />
+				</Compiler>
+				<Linker>
+					<Add option="-lstorage" />
+					<Add option="-static" />
+					<Add option="-static-libgcc" />
+					<Add option="-static-libstdc++" />
+					<Add directory="../bin/Debug" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="../bin/Release/dragon-shop" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="../Storage/include" />
+					<Add directory="../Lib/" />
+					<Add directory="include" />
+					<Add directory="dragon-shop" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-static" />
+					<Add option="-static-libgcc" />
+					<Add option="-static-libstdc++" />
+					<Add directory="../bin/Release" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Linker>
+			<Add library="gdi32" />
+			<Add library="user32" />
+			<Add library="kernel32" />
+			<Add library="comctl32" />
+		</Linker>
+		<Unit filename="CDModels.cpp" />
+		<Unit filename="CDModels.h" />
+		<Unit filename="CDSerialize.h" />
+		<Unit filename="CDSettingApp.cpp" />
+		<Unit filename="CDSettingApp.h" />
+		<Unit filename="CDSettingData.cpp" />
+		<Unit filename="CDSettingData.h" />
+		<Unit filename="CDTools.cpp" />
+		<Unit filename="CDTools.h" />
+		<Unit filename="TB_Firma.cpp" />
+		<Unit filename="TB_Firma.h" />
+		<Unit filename="TB_Lokalizacja.cpp" />
+		<Unit filename="TB_Lokalizacja.h" />
+		<Unit filename="TB_Oddzial.cpp" />
+		<Unit filename="TB_Oddzial.h" />
+		<Unit filename="TB_Produkt.cpp" />
+		<Unit filename="TB_Produkt.h" />
+		<Unit filename="TB_Zakup.cpp" />
+		<Unit filename="TB_Zakup.h" />
+		<Unit filename="Until_TB.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="mainShop.h" />
+		<Unit filename="manifest.xml" />
+		<Unit filename="resource.h" />
+		<Unit filename="resource.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

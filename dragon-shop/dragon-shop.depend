@@ -1,0 +1,144 @@
+# depslib dependency file v1.0
+1419948167 source:e:\projekty\dragon\dragon-shop\main.cpp
+	<windows.h>
+	<commctrl.h>
+	<stdio.h>
+	"resource.h"
+	"CDModels.h"
+	"mainShop.h"
+	"CDSettingApp.h"
+	"TB_Firma.h"
+	"TB_Lokalizacja.h"
+	"CDTools.h"
+
+1419986813 e:\projekty\dragon\dragon-shop\resource.h
+
+1419895978 source:e:\projekty\dragon\dragon-shop\resource.rc
+	<windows.h>
+	<commctrl.h>
+	<richedit.h>
+	"resource.h"
+
+1419281574 source:e:\projekty\dragon\dragon-shop\cdsettingapp.cpp
+	"CDSettingApp.h"
+	"CDSerialize.h"
+
+1419169770 e:\projekty\dragon\dragon-shop\cdsettingapp.h
+	"CDSettingData.h"
+
+1419305535 e:\projekty\dragon\dragon-shop\cdsettingdata.h
+	<CDStorageTools.h>
+	<string>
+	<windows.h>
+
+1419820288 e:\projekty\dragon\storage\include\cdstoragetools.h
+	<vector>
+	<string>
+
+1419169770 e:\projekty\dragon\dragon-shop\cdserialize.h
+	<string>
+	<iostream>
+	<fstream>
+	<sstream>
+
+1419305406 source:e:\projekty\dragon\dragon-shop\cdsettingdata.cpp
+	"CDSettingData.h"
+	<cstring>
+	<windows.h>
+
+1419895652 source:e:\projekty\dragon\dragon-shop\cdmodels.cpp
+	<windows.h>
+	<Commctrl.h>
+	"CDModels.h"
+	"CDSettingApp.h"
+	"CDDebug.h"
+	"Until_TB.h"
+	"CDTools.h"
+	"resource.h"
+
+1419889238 e:\projekty\dragon\dragon-shop\cdmodels.h
+	<windows.h>
+	<IDataTable.h>
+	<CDStorage.h>
+	"Until_TB.h"
+
+1419309802 e:\projekty\dragon\storage\include\cdstorage.h
+	<string>
+	"CDStorageTools.h"
+	"IDataBase.h"
+
+1419309526 e:\projekty\dragon\storage\include\idatabase.h
+	<string>
+	<vector>
+
+1419961817 e:\projekty\dragon\dragon-shop\tb_firma.h
+	<CDStorageTools.h>
+	"IDataTable.h"
+
+1419463351 e:\projekty\dragon\storage\include\idatatable.h
+	"CDStorageTools.h"
+	<string>
+
+1419893953 source:e:\projekty\dragon\dragon-shop\tb_firma.cpp
+	"TB_Firma.h"
+	"CDTools.h"
+	<cstdio>
+
+1419302157 e:\projekty\dragon\testlib\test.h
+
+1419195884 e:\projekty\dragon\storage\cdstoragetools.h
+	<vector>
+	<string>
+
+1419302997 e:\projekty\dragon\storage\storagemain.h
+
+1419864322 e:\projekty\dragon\dragon-shop\tb_lokalizacja.h
+	"IDataTable.h"
+
+1419307303 e:\projekty\dragon\lib\\cddebug.h
+	<cstdio>
+
+1419821836 source:e:\projekty\dragon\dragon-shop\tb_lokalizacja.cpp
+	"TB_Lokalizacja.h"
+
+1419977723 source:e:\projekty\dragon\dragon-shop\tb_produkt.cpp
+	"TB_Produkt.h"
+	"CDTools.h"
+
+1419976751 e:\projekty\dragon\dragon-shop\tb_produkt.h
+	"IDataTable.h"
+
+1419473316 source:e:\projekty\dragon\dragon-shop\tb_zakup.cpp
+	"TB_Zakup.h"
+
+1419473316 e:\projekty\dragon\dragon-shop\tb_zakup.h
+	"IDataTable.h"
+
+1419894988 source:e:\projekty\dragon\dragon-shop\tb_oddzial.cpp
+	"TB_Oddzial.h"
+	"CDTools.h"
+
+1419894774 e:\projekty\dragon\dragon-shop\tb_oddzial.h
+	"IDataTable.h"
+
+1419878798 e:\projekty\dragon\dragon-shop\mainshop.h
+	<windows.h>
+	<string>
+
+1419895526 e:\projekty\dragon\dragon-shop\until_tb.h
+	"TB_Firma.h"
+	"TB_Lokalizacja.h"
+	"TB_Oddzial.h"
+	"TB_Produkt.h"
+	"TB_Zakup.h"
+
+1419895572 e:\projekty\dragon\dragon-shop\cdtools.h
+	<string>
+	<sstream>
+	<stdlib.h>
+	"Until_TB.h"
+
+1419895689 source:e:\projekty\dragon\dragon-shop\cdtools.cpp
+	"CDTools.h"
+	<cstdio>
+
