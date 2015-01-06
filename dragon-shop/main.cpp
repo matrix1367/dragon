@@ -9,6 +9,9 @@
 #include "TB_Lokalizacja.h"
 #include "CDTools.h"
 
+#define ID_TRAY1 99
+#define CMSG_TRAY1 98
+
 HINSTANCE hInst;
 
 BOOL CALLBACK DlgFirmy(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -21,6 +24,7 @@ BOOL CALLBACK DlgProdukty(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 BOOL CALLBACK DlgDodajProdukty(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK DlgZakupy(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK DlgDodajZakupy(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK DlgDodajZakupyMulti(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -28,6 +32,38 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
     case WM_INITDIALOG:
     {
+        SendMessage(hwndDlg, WM_SETICON, ICON_SMALL, (LPARAM)IDI_ICON1);
+        SendMessage(hwndDlg, WM_SETICON, ICON_BIG, (LPARAM)IDI_ICON1);
+
+        LPSTR sTip = "Dragon-shop";
+        NOTIFYICONDATA nid;
+
+        nid.cbSize = sizeof( NOTIFYICONDATA );
+        nid.hWnd = hwndDlg;
+        nid.uID = ID_TRAY1;
+        nid.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
+        nid.uCallbackMessage = CMSG_TRAY1;
+        nid.hIcon = (HICON)LoadIcon( hInst, MAKEINTRESOURCE( IDI_ICON1 ) );
+        lstrcpy( nid.szTip, sTip );
+
+        BOOL r;
+        r = Shell_NotifyIcon( NIM_ADD, & nid );
+        if( !r ) MessageBox( hwndDlg, "No niestety, z ikonki nici...", "Łeeee...", MB_ICONEXCLAMATION );
+    }
+    return TRUE;
+
+    case WM_SIZE:
+    {
+        if( wParam == SIZE_MINIMIZED )
+        {
+            ShowWindow( hwndDlg, SW_HIDE );
+            // 1
+        }
+        else
+        {
+            ShowWindow( hwndDlg, SW_SHOW );
+            // 2
+        }
     }
     return TRUE;
 
@@ -36,6 +72,26 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
         EndDialog(hwndDlg, 0);
     }
     return TRUE;
+
+    case CMSG_TRAY1:
+      if(lParam == WM_LBUTTONDOWN)
+      {
+         ShowWindow( hwndDlg, SW_RESTORE );
+        break;
+      }
+    return TRUE;
+
+    case WM_DESTROY:
+    {
+        NOTIFYICONDATA nid;
+        nid.cbSize = sizeof( NOTIFYICONDATA );
+        nid.hWnd = hwndDlg;
+        nid.uID = ID_TRAY1;
+        nid.uFlags = 0;
+        Shell_NotifyIcon( NIM_DELETE, & nid );
+
+        PostQuitMessage( 0 );
+    }
 
     case WM_COMMAND:
     {
@@ -63,10 +119,12 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
             }
         case ID_MAINMENU_SHOP_PRODUKTY:
             {
+                DialogBox(hInst, MAKEINTRESOURCE(DLG_PRODUKTY), NULL, (DLGPROC)DlgProdukty);
                 break;
             }
         case ID_MAINMENU_SHOP_ZAKUPY:
             {
+                DialogBox(hInst, MAKEINTRESOURCE(DLG_ZAKUPY), NULL, (DLGPROC)DlgZakupy);
                 break;
             }
         }
@@ -120,7 +178,6 @@ BOOL CALLBACK DlgFirmy(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
         {
             HWND listview = GetDlgItem(hwndDlg, DLG_FIRMY_IDC_LIST1);
             SetWindowPos( listview, 0, 0, 0 , LOWORD( lParam ), HIWORD( lParam ), SWP_SHOWWINDOW );
-            //printf("w:%d , h: %d\n" ,  LOWORD( lParam ),  HIWORD( lParam ));
             break;
         }
         return TRUE;
@@ -250,6 +307,7 @@ BOOL CALLBACK DlgOddzialy(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
             lvc.cx = 150;
             lvc.pszText = const_cast<char*>( "Lokalizacja");
             ListView_InsertColumn(listview , 2, & lvc );
+
             CDModels::getInstance().SetDataInTable(hwndDlg,TB_ODDZIAL);
         }
         return TRUE;
@@ -532,9 +590,42 @@ BOOL CALLBACK DlgProdukty(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     switch(uMsg)
     {
+        case WM_INITDIALOG:
+        {
+            HWND listview = GetDlgItem(hwndDlg, DLG_PRODUKT_IDC_LIST1);
+            LVCOLUMN lvc;
+            lvc.mask = LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+            lvc.iSubItem = 0;
+            lvc.cx = 200;
+
+            lvc.pszText = const_cast<char*>( "Nazwa");
+            ListView_InsertColumn(listview , 0, & lvc );
+
+            lvc.iSubItem = 1;
+            lvc.cx = 100;
+            lvc.pszText = const_cast<char*>( "Jednostka");
+            ListView_InsertColumn(listview , 1, & lvc );
+
+            lvc.iSubItem = 2;
+            lvc.cx = 50;
+            lvc.pszText = const_cast<char*>( "Termin");
+            ListView_InsertColumn(listview , 2, & lvc );
+
+            CDModels::getInstance().SetDataInTable(hwndDlg,TB_PRODUKT);
+        }
+        return true;
+
+        case WM_SIZE:
+        {
+            HWND listview = GetDlgItem(hwndDlg, DLG_PRODUKT_IDC_LIST1);
+            SetWindowPos( listview, 0, 0, 0 , LOWORD( lParam ), HIWORD( lParam ), SWP_SHOWWINDOW );
+            break;
+        }
+
         case WM_CLOSE:
         {
             EndDialog(hwndDlg, 0);
+            break;
         }
         return TRUE;
 
@@ -547,6 +638,15 @@ BOOL CALLBACK DlgProdukty(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
                      EndDialog(hwndDlg, 0);
                      break;
                 }
+                case IDM_DODAJ_PRODUKT1:
+                    {
+                        int res =   DialogBox(hInst, MAKEINTRESOURCE(DLG_DODAJ_PRODUKT), NULL, (DLGPROC)DlgDodajProdukty);
+                        if (res == IDOK)
+                        {
+                            CDModels::getInstance().SetDataInTable(hwndDlg,TB_PRODUKT);
+                        }
+                        break;
+                    }
             }
         }
         return TRUE;
@@ -558,9 +658,19 @@ BOOL CALLBACK DlgDodajProdukty(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 {
     switch(uMsg)
     {
+        case WM_INITDIALOG:
+        {
+            HWND HWNDcombo = GetDlgItem(hwndDlg, DLG_DODAJ_PRODUKT_IDC_COMBO1);
+
+            SendMessage(HWNDcombo,  CB_ADDSTRING, 0, reinterpret_cast<LPARAM>((LPCTSTR)("kg")));
+            SendMessage(HWNDcombo,  CB_ADDSTRING, 0, reinterpret_cast<LPARAM>((LPCTSTR)("sztuk")));
+            SendMessage(HWNDcombo,  CB_SETCURSEL, 0, 0);
+        }
+        return TRUE;
+
         case WM_CLOSE:
         {
-            EndDialog(hwndDlg, 0);
+            EndDialog(hwndDlg, IDCANCEL);
         }
         return TRUE;
 
@@ -568,15 +678,27 @@ BOOL CALLBACK DlgDodajProdukty(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lP
         {
             switch(LOWORD(wParam))
             {
-                case ID_MAINMENU_ZAKUPY_EXIT:
+                case IDCANCEL:
                 {
-                     EndDialog(hwndDlg, 0);
+                     EndDialog(hwndDlg, IDCANCEL);
                      break;
                 }
-                case IDM_DODAJ_PRODUKT1:
+                case IDOK:
+                {
+                    std::string name;
+                    std::string jednostka;
+
+                    if (GetTextFromEdit(hwndDlg,  DLG_DODAJ_PRODUKT_IDC_EDIT1, name))
                     {
-                        break;
+                        GetTextFromEdit(hwndDlg,  DLG_DODAJ_PRODUKT_IDC_COMBO1, jednostka);
+                        HWND checkBox = GetDlgItem(hwndDlg, DLG_DODAJ_PRODUKT_IDC_CHECKBOX1);
+                        int dwPos = SendMessage(checkBox, BM_GETCHECK, 0, 0);
+                        TB_Produkt produkt(name, jednostka , dwPos, CDSettingApp::getInstance().GetSettingData().typeStorage);
+                        CDModels::getInstance().AddDataToTable(&produkt);
+                        EndDialog(hwndDlg, IDOK);
                     }
+                    break;
+                }
             }
         }
         return TRUE;
@@ -588,9 +710,64 @@ BOOL CALLBACK DlgZakupy(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     switch(uMsg)
     {
+        case WM_INITDIALOG:
+            {
+
+            HWND listview = GetDlgItem(hwndDlg, DLG_ZAKUPY_ID_LISTVIEW1);
+            LVCOLUMN lvc;
+            lvc.mask = LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+            lvc.iSubItem = 0;
+            lvc.cx = 100;
+
+            lvc.pszText = const_cast<char*>( "Firma");
+            ListView_InsertColumn(listview , 0, & lvc );
+
+            lvc.iSubItem = 1;
+            lvc.cx = 50;
+            lvc.pszText = const_cast<char*>( "Oddzial");
+            ListView_InsertColumn(listview , 1, & lvc );
+
+            lvc.iSubItem = 2;
+            lvc.cx = 50;
+            lvc.pszText = const_cast<char*>( "Produkt");
+            ListView_InsertColumn(listview , 2, & lvc );
+
+            lvc.iSubItem = 3;
+            lvc.cx = 50;
+            lvc.pszText = const_cast<char*>( "Cena");
+            ListView_InsertColumn(listview , 3, & lvc );
+
+            lvc.iSubItem = 4;
+            lvc.cx = 50;
+            lvc.pszText = const_cast<char*>( "Ilosc");
+            ListView_InsertColumn(listview , 4, & lvc );
+
+            lvc.iSubItem = 5;
+            lvc.cx = 50;
+            lvc.pszText = const_cast<char*>( "Data waznosci");
+            ListView_InsertColumn(listview , 5, & lvc );
+
+            lvc.iSubItem = 6;
+            lvc.cx = 50;
+            lvc.pszText = const_cast<char*>( "Data zakupu");
+            ListView_InsertColumn(listview , 6, & lvc );
+
+            CDModels::getInstance().SetDataInTable(hwndDlg,TB_ZAKUPY);
+            break;
+            }
+            return TRUE;
+
         case WM_CLOSE:
         {
             EndDialog(hwndDlg, 0);
+        }
+        return TRUE;
+
+        case WM_SIZE:
+        {
+            HWND listview = GetDlgItem(hwndDlg, DLG_ZAKUPY_ID_LISTVIEW1);
+            SetWindowPos( listview, 0, 0, 0 , LOWORD( lParam ), HIWORD( lParam ), SWP_SHOWWINDOW );
+            break;
         }
         return TRUE;
 
@@ -603,8 +780,22 @@ BOOL CALLBACK DlgZakupy(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
                      EndDialog(hwndDlg, 0);
                      break;
                 }
-                case IDM_DODAJ_PRODUKT1:
+                case IDM_DODAJ_ZAKUP1:
                     {
+                        int res =   DialogBox(hInst, MAKEINTRESOURCE(DLG_DODAJ_ZAKUP), NULL, (DLGPROC)DlgDodajZakupy);
+                        if (res == IDOK)
+                        {
+                            CDModels::getInstance().SetDataInTable(hwndDlg,TB_ZAKUPY);
+                        }
+                        break;
+                    }
+                case ID_MAINMENU_ZAKUPY_DODAJ_ZAKUPY:
+                    {
+                        int res =   DialogBox(hInst, MAKEINTRESOURCE(DLG_DODAJ_ZAKUP1), NULL, (DLGPROC)DlgDodajZakupyMulti);
+                        if (res == IDOK)
+                        {
+                            CDModels::getInstance().SetDataInTable(hwndDlg,TB_ZAKUPY);
+                        }
                         break;
                     }
             }
@@ -618,9 +809,70 @@ BOOL CALLBACK DlgDodajZakupy(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 {
     switch(uMsg)
     {
+        case WM_INITDIALOG:
+            {
+                    TB_Row row_firmy;
+                    CDModels::getInstance().GetCompactFirmy(row_firmy);
+                    if (row_firmy.size() > 0)
+                    {
+                        HWND HWNDcombo = GetDlgItem(hwndDlg, DLG_DODAJ_ZAKUP_COMBOBOX_FIRMA);
+                        for(TB_Row::iterator it = row_firmy.begin(); it != row_firmy.end(); it++)
+                        {
+                                 SendMessage(HWNDcombo,
+                                            CB_ADDSTRING,
+                                            0,
+                                            reinterpret_cast<LPARAM>((LPCTSTR)(*it).c_str()));
+                        }
+                        SendMessage(HWNDcombo, CB_SETCURSEL, 0, 0);
+
+                        TB_Row row_oddzial;
+                        CDModels::getInstance().GetCompactOddzial(CDModels::getInstance().ConvertIndexCBToId(0,TB_FIRMA), row_oddzial);
+                        if (row_oddzial.size() > 0)
+                        {
+                            HWND HWNDcombo = GetDlgItem(hwndDlg, DLG_DODAJ_ZAKUP_COMBOBOX_ODDZIAL);
+                            for(TB_Row::iterator it = row_oddzial.begin(); it != row_oddzial.end(); it++)
+                            {
+                                     SendMessage(HWNDcombo,
+                                                CB_ADDSTRING,
+                                                0,
+                                                reinterpret_cast<LPARAM>((LPCTSTR)(*it).c_str()));
+                            }
+                            SendMessage(HWNDcombo, CB_SETCURSEL, 0, 0);
+                        }
+
+                    }
+                    else
+                    {
+                        MessageBox(hwndDlg, "Brak firmy", "Błąd", 0);
+                        EndDialog(hwndDlg, IDCANCEL);
+                    }
+
+                    TB_Row tb_result_produkt;
+                    CDModels::getInstance().GetCompactProdukt(tb_result_produkt);
+                    if ( tb_result_produkt.size() > 0 )
+                    {
+                            HWND HWNDcombo = GetDlgItem(hwndDlg, DLG_DODAJ_ZAKUP_COMBOBOX_PRODUKT);
+                            for(TB_Row::iterator it = tb_result_produkt.begin(); it != tb_result_produkt.end(); it++)
+                            {
+                                     SendMessage(HWNDcombo,
+                                                CB_ADDSTRING,
+                                                0,
+                                                reinterpret_cast<LPARAM>((LPCTSTR)(*it).c_str()));
+                            }
+                            SendMessage(HWNDcombo, CB_SETCURSEL, 0, 0);
+                    }
+                    else
+                    {
+                        MessageBox(hwndDlg, "Brak produktow", "Błąd", 0);
+                        EndDialog(hwndDlg, IDCANCEL);
+                    }
+                break;
+            }
+            return TRUE;
+
         case WM_CLOSE:
         {
-            EndDialog(hwndDlg, 0);
+            EndDialog(hwndDlg, IDCANCEL);
         }
         return TRUE;
 
@@ -628,13 +880,278 @@ BOOL CALLBACK DlgDodajZakupy(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
         {
             switch(LOWORD(wParam))
             {
-                case ID_MAINMENU_ZAKUPY_EXIT:
+            case DLG_DODAJ_ZAKUP_COMBOBOX_FIRMA:
                 {
-                     EndDialog(hwndDlg, 0);
+                    switch(HIWORD(wParam))
+                    {
+                    case CBN_CLOSEUP:
+                        {
+                            HWND HWNDcombo = GetDlgItem(hwndDlg, DLG_DODAJ_ZAKUP_COMBOBOX_ODDZIAL);
+                            SendMessage(HWNDcombo, CB_RESETCONTENT,  0, 0 );
+                            int indexComboFirma  = -1;
+                            GetIndexFromCombo(hwndDlg,DLG_DODAJ_ZAKUP_COMBOBOX_FIRMA, indexComboFirma);
+                            printf("index : %d\n" , indexComboFirma );
+                            TB_Row row_oddzial;
+                            CDModels::getInstance().GetCompactOddzial(CDModels::getInstance().ConvertIndexCBToId(indexComboFirma,TB_FIRMA), row_oddzial);
+                            if (row_oddzial.size() > 0)
+                            {
+                                HWND HWNDcombo = GetDlgItem(hwndDlg, DLG_DODAJ_ZAKUP_COMBOBOX_ODDZIAL);
+                                for(TB_Row::iterator it = row_oddzial.begin(); it != row_oddzial.end(); it++)
+                                {
+                                         SendMessage(HWNDcombo,
+                                                    CB_ADDSTRING,
+                                                    0,
+                                                    reinterpret_cast<LPARAM>((LPCTSTR)(*it).c_str()));
+                                }
+                                SendMessage(HWNDcombo, CB_SETCURSEL, 0, 0);
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case IDCANCEL:
+                {
+                     EndDialog(hwndDlg, IDCANCEL);
                      break;
                 }
-                case IDM_DODAJ_PRODUKT1:
+                case IDOK:
                     {
+                        int id_firmy = 0;
+                        int id_oddzialu = 0;
+                        int id_produktu = 0;
+                        std::string cena = "";
+                        std::string ilosc = "" ;
+                        std::string data_waznosci = "";
+                        std::string data_zakupu = "";
+
+                        GetIndexFromCombo(hwndDlg, DLG_DODAJ_ZAKUP_COMBOBOX_FIRMA, id_firmy);
+                        id_firmy =  CDModels::getInstance().ConvertIndexCBToId(id_firmy,TB_FIRMA);
+
+                        GetIndexFromCombo(hwndDlg, DLG_DODAJ_ZAKUP_COMBOBOX_ODDZIAL, id_oddzialu);
+                        id_oddzialu = CDModels::getInstance().ConvertIndexCBToId(id_oddzialu , TB_ODDZIAL);
+
+                        GetIndexFromCombo(hwndDlg, DLG_DODAJ_ZAKUP_COMBOBOX_PRODUKT, id_produktu);
+                        id_produktu = CDModels::getInstance().ConvertIndexCBToId(id_produktu, TB_PRODUKT);
+
+                        GetTextFromEdit(hwndDlg,  DLG_DODAJ_ZAKUP_EDIT_CENA, cena);
+                        GetTextFromEdit(hwndDlg,  DLG_DODAJ_ZAKUP_EDIT_ILOSC, ilosc);
+
+                        GetTextFromEdit(hwndDlg,  DLG_DODAJ_ZAKUP_DATA_WAZNOSCI, data_waznosci);
+                        GetTextFromEdit(hwndDlg,  DLG_DODAJ_ZAKUP_DATA_ZAKUPU, data_zakupu);
+
+                        printf("firma %d, oddzial %d, produkt %d" , id_firmy, id_oddzialu , id_produktu);
+                        printf("cena %s , ilosc %s , waznosc %s , zakup %s" , cena.c_str() , ilosc.c_str() , data_waznosci.c_str() , data_zakupu.c_str());
+                        //TB_Zakup(int id_firmy, int id_oodizalu, int id_produktu, float cena, float ilosc, std::string data_waznosci, std::string data_zakupu, TypeStorage typeStorage)
+                        TB_Zakup zakup(id_firmy, id_oddzialu, id_produktu, stringToFloat(cena), stringToFloat(ilosc) , data_waznosci , data_zakupu, CDSettingApp::getInstance().GetSettingData().typeStorage);
+                        CDModels::getInstance().AddDataToTable(&zakup);
+                        EndDialog(hwndDlg, IDOK);
+                        break;
+                    }
+            }
+        }
+        return TRUE;
+    }
+    return FALSE;
+}
+
+std::vector<TB_Zakup> listaZakupow;
+
+BOOL CALLBACK DlgDodajZakupyMulti(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+    switch(uMsg)
+    {
+        case WM_INITDIALOG:
+            {
+
+                HWND listview = GetDlgItem(hwndDlg, DLG_DODAJ_ZAKUP1_LISTVIEW);
+                LVCOLUMN lvc;
+                lvc.mask = LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+                lvc.iSubItem = 0;
+                lvc.cx = 200;
+
+                lvc.pszText = const_cast<char*>( "Nazwa produktu");
+                ListView_InsertColumn(listview , 0, & lvc );
+
+                lvc.iSubItem = 1;
+                lvc.cx = 50;
+                lvc.pszText = const_cast<char*>( "Ilosc");
+                ListView_InsertColumn(listview , 1, & lvc );
+
+                lvc.iSubItem = 2;
+                lvc.cx = 50;
+                lvc.pszText = const_cast<char*>( "Cena");
+                ListView_InsertColumn(listview , 2, & lvc );
+
+                lvc.iSubItem = 3;
+                lvc.cx = 70;
+                lvc.pszText = const_cast<char*>( "Data waznosci");
+                ListView_InsertColumn(listview , 3, & lvc );
+
+                    listaZakupow.clear();
+
+                    TB_Row row_firmy;
+                    CDModels::getInstance().GetCompactFirmy(row_firmy);
+                    if (row_firmy.size() > 0)
+                    {
+                        HWND HWNDcombo = GetDlgItem(hwndDlg, DLG_DODAJ_ZAKUP1_COMBOBOX_FIRMA);
+                        for(TB_Row::iterator it = row_firmy.begin(); it != row_firmy.end(); it++)
+                        {
+                                 SendMessage(HWNDcombo,
+                                            CB_ADDSTRING,
+                                            0,
+                                            reinterpret_cast<LPARAM>((LPCTSTR)(*it).c_str()));
+                        }
+                        SendMessage(HWNDcombo, CB_SETCURSEL, 0, 0);
+
+                        TB_Row row_oddzial;
+                        CDModels::getInstance().GetCompactOddzial(CDModels::getInstance().ConvertIndexCBToId(0,TB_FIRMA), row_oddzial);
+                        if (row_oddzial.size() > 0)
+                        {
+                            HWND HWNDcombo = GetDlgItem(hwndDlg, DLG_DODAJ_ZAKUP1_COMBOBOX_ODDZIAL);
+                            for(TB_Row::iterator it = row_oddzial.begin(); it != row_oddzial.end(); it++)
+                            {
+                                     SendMessage(HWNDcombo,
+                                                CB_ADDSTRING,
+                                                0,
+                                                reinterpret_cast<LPARAM>((LPCTSTR)(*it).c_str()));
+                            }
+                            SendMessage(HWNDcombo, CB_SETCURSEL, 0, 0);
+                        }
+
+                    }
+                    else
+                    {
+                        MessageBox(hwndDlg, "Brak firmy", "Błąd", 0);
+                        EndDialog(hwndDlg, IDCANCEL);
+                    }
+
+                    TB_Row tb_result_produkt;
+                    CDModels::getInstance().GetCompactProdukt(tb_result_produkt);
+                    if ( tb_result_produkt.size() > 0 )
+                    {
+                            HWND HWNDcombo = GetDlgItem(hwndDlg, DLG_DODAJ_ZAKUP1_COMBOBOX_PRODUKT);
+                            for(TB_Row::iterator it = tb_result_produkt.begin(); it != tb_result_produkt.end(); it++)
+                            {
+                                     SendMessage(HWNDcombo,
+                                                CB_ADDSTRING,
+                                                0,
+                                                reinterpret_cast<LPARAM>((LPCTSTR)(*it).c_str()));
+                            }
+                            SendMessage(HWNDcombo, CB_SETCURSEL, 0, 0);
+                    }
+                    else
+                    {
+                        MessageBox(hwndDlg, "Brak produktow", "Błąd", 0);
+                        EndDialog(hwndDlg, IDCANCEL);
+                    }
+                break;
+            }
+            return TRUE;
+
+        case WM_CLOSE:
+        {
+            EndDialog(hwndDlg, IDCANCEL);
+        }
+        return TRUE;
+
+        case WM_COMMAND:
+        {
+            switch(LOWORD(wParam))
+            {
+            case DLG_DODAJ_ZAKUP1_COMBOBOX_FIRMA:
+                {
+                    switch(HIWORD(wParam))
+                    {
+                    case CBN_CLOSEUP:
+                        {
+                            HWND HWNDcombo = GetDlgItem(hwndDlg, DLG_DODAJ_ZAKUP1_COMBOBOX_ODDZIAL);
+                            SendMessage(HWNDcombo, CB_RESETCONTENT,  0, 0 );
+                            int indexComboFirma  = -1;
+                            GetIndexFromCombo(hwndDlg,DLG_DODAJ_ZAKUP1_COMBOBOX_FIRMA, indexComboFirma);
+                            printf("index : %d\n" , indexComboFirma );
+                            TB_Row row_oddzial;
+                            CDModels::getInstance().GetCompactOddzial(CDModels::getInstance().ConvertIndexCBToId(indexComboFirma,TB_FIRMA), row_oddzial);
+                            if (row_oddzial.size() > 0)
+                            {
+                                HWND HWNDcombo = GetDlgItem(hwndDlg, DLG_DODAJ_ZAKUP1_COMBOBOX_ODDZIAL);
+                                for(TB_Row::iterator it = row_oddzial.begin(); it != row_oddzial.end(); it++)
+                                {
+                                         SendMessage(HWNDcombo,
+                                                    CB_ADDSTRING,
+                                                    0,
+                                                    reinterpret_cast<LPARAM>((LPCTSTR)(*it).c_str()));
+                                }
+                                SendMessage(HWNDcombo, CB_SETCURSEL, 0, 0);
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case IDCANCEL:
+                {
+                     EndDialog(hwndDlg, IDCANCEL);
+                     break;
+                }
+                case IDOK:
+                    {
+                        for (std::vector<TB_Zakup>::iterator it = listaZakupow.begin() ; it != listaZakupow.end() ; it ++)
+                        {
+                            CDModels::getInstance().AddDataToTable(&(*it));
+                        }
+                        EndDialog(hwndDlg, IDOK);
+                        break;
+                    }
+                case DLG_DODAJ_ZAKUP1_BUTTON_DODAJ:
+                    {
+                        int id_firmy = 0;
+                        int id_oddzialu = 0;
+                        int id_produktu = 0;
+                        std::string cena = "";
+                        std::string ilosc = "" ;
+                        std::string data_waznosci = "";
+                        std::string data_zakupu = "";
+
+                        GetIndexFromCombo(hwndDlg, DLG_DODAJ_ZAKUP1_COMBOBOX_FIRMA, id_firmy);
+                        id_firmy =  CDModels::getInstance().ConvertIndexCBToId(id_firmy,TB_FIRMA);
+
+                        GetIndexFromCombo(hwndDlg, DLG_DODAJ_ZAKUP1_COMBOBOX_ODDZIAL, id_oddzialu);
+                        id_oddzialu = CDModels::getInstance().ConvertIndexCBToId(id_oddzialu , TB_ODDZIAL);
+
+                        GetIndexFromCombo(hwndDlg, DLG_DODAJ_ZAKUP1_COMBOBOX_PRODUKT, id_produktu);
+                        id_produktu = CDModels::getInstance().ConvertIndexCBToId(id_produktu, TB_PRODUKT);
+
+                        GetTextFromEdit(hwndDlg,  DLG_DODAJ_ZAKUP1_EDIT_CENA, cena);
+                        GetTextFromEdit(hwndDlg,  DLG_DODAJ_ZAKUP1_EDIT_ILOSC, ilosc);
+
+                        GetTextFromEdit(hwndDlg,  DLG_DODAJ_ZAKUP1_DATA_WAZNOSCI, data_waznosci);
+                        GetTextFromEdit(hwndDlg,  DLG_DODAJ_ZAKUP1_DATA_ZAKUPU, data_zakupu);
+
+                        printf("firma %d, oddzial %d, produkt %d" , id_firmy, id_oddzialu , id_produktu);
+                        printf("cena %s , ilosc %s , waznosc %s , zakup %s" , cena.c_str() , ilosc.c_str() , data_waznosci.c_str() , data_zakupu.c_str());
+                        //TB_Zakup(int id_firmy, int id_oodizalu, int id_produktu, float cena, float ilosc, std::string data_waznosci, std::string data_zakupu, TypeStorage typeStorage)
+                        TB_Zakup zakup(id_firmy, id_oddzialu, id_produktu, stringToFloat(cena), stringToFloat(ilosc) , data_waznosci , data_zakupu, CDSettingApp::getInstance().GetSettingData().typeStorage);
+                        listaZakupow.push_back(zakup);
+
+
+                        HWND listview = GetDlgItem(hwndDlg, DLG_DODAJ_ZAKUP1_LISTVIEW);
+                        LVITEM lvi;
+                        lvi.mask = LVIF_TEXT;
+                        int indexItem = ListView_GetItemCount(listview);
+
+                        lvi.pszText = const_cast<char*>((std::string("prodult")).c_str());
+                        lvi.iItem = indexItem;
+                        lvi.iSubItem = 0;
+                        ListView_InsertItem( listview, & lvi );
+                        ListView_SetItemText( listview, indexItem, 1, const_cast<char*>(ilosc.c_str()));
+                        ListView_SetItemText( listview, indexItem, 2, const_cast<char*>(cena.c_str()));
+                        ListView_SetItemText( listview, indexItem, 3, const_cast<char*>(data_waznosci.c_str()));
+
+
+
+                        //CDModels::getInstance().AddDataToTable(&zakup);
+                        //EndDialog(hwndDlg, IDOK);
                         break;
                     }
             }

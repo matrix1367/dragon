@@ -5,6 +5,7 @@
 class TB_Produkt : public IDataTable
 {
     public:
+        enum CIP {CIP_ID, CIP_NAME, CIP_UNIT, CIP_TERM};
         TB_Produkt(std::string name, std::string unit,  int term,  TypeStorage typeStorage);
         virtual ~TB_Produkt();
         static std::string createTableStr(TypeStorage typeStorage);

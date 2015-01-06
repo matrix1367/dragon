@@ -147,7 +147,7 @@
 	<unicode/ubrk.h>
 	<unicode/utf16.h>
 
-1419169767 source:e:\projekty\dragon\lib\sqlite\shell.c
+1420109751 source:e:\projekty\dragon\lib\sqlite\shell.c
 	<stdlib.h>
 	<string.h>
 	<stdio.h>
@@ -168,10 +168,10 @@
 	<sys/resource.h>
 	<windows.h>
 
-1419169767 e:\projekty\dragon\lib\sqlite\sqlite3.h
+1420109751 e:\projekty\dragon\lib\sqlite\sqlite3.h
 	<stdarg.h>
 
-1419169767 source:e:\projekty\dragon\lib\sqlite\sqlite3.c
+1420109751 source:e:\projekty\dragon\lib\sqlite\sqlite3.c
 	"mingw.h"
 	"_mingw.h"
 	<stdarg.h>

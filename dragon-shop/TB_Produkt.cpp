@@ -51,7 +51,7 @@ std::string TB_Produkt::removeRow(int id)
 {
     if (m_typeStorage == TYPE_STORAGE_SQLITE3)
     {
-        return "Select * FROM Firma";
+        return "Select * FROM Produkt";
     }
     else
     {

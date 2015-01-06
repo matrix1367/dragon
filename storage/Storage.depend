@@ -42,39 +42,39 @@
 	<vector>
 	<string>
 
-1419174933 source:e:\projekty\dragon\storage\src\idatatable.cpp
+1420109751 source:e:\projekty\dragon\storage\src\idatatable.cpp
 	"IDataTable.h"
 
-1419193061 e:\projekty\dragon\storage\include\idatatable.h
+1420109751 e:\projekty\dragon\storage\include\idatatable.h
 	"CDStorageTools.h"
 	<string>
 
-1419195884 e:\projekty\dragon\storage\include\cdstoragetools.h
+1420109751 e:\projekty\dragon\storage\include\cdstoragetools.h
 	<vector>
 	<string>
 
-1419309476 source:e:\projekty\dragon\storage\src\cdstorage.cpp
+1420109751 source:e:\projekty\dragon\storage\src\cdstorage.cpp
 	"CDStorage.h"
 	"DataBaseSQLite3.h"
 	<cstdio>
 
-1419309400 e:\projekty\dragon\storage\include\cdstorage.h
+1420109751 e:\projekty\dragon\storage\include\cdstorage.h
 	<string>
 	"CDStorageTools.h"
 	"IDataBase.h"
 
-1419309526 e:\projekty\dragon\storage\include\idatabase.h
+1420109751 e:\projekty\dragon\storage\include\idatabase.h
 	<string>
 	<vector>
 
-1419309373 e:\projekty\dragon\storage\include\databasesqlite3.h
+1420109751 e:\projekty\dragon\storage\include\databasesqlite3.h
 	"sqlite3.h"
 	"IDataBase.h"
 
-1419169767 e:\projekty\dragon\lib\sqlite\sqlite3.h
+1420109751 e:\projekty\dragon\lib\sqlite\sqlite3.h
 	<stdarg.h>
 
-1419308791 source:e:\projekty\dragon\storage\src\databasesqlite3.cpp
+1420109751 source:e:\projekty\dragon\storage\src\databasesqlite3.cpp
 	"DataBaseSQLite3.h"
 	"CDStorageTools.h"
 	<cstdio>
@@ -84,6 +84,14 @@
 1419307303 e:\projekty\dragon\storage\cddebug.h
 	<cstdio>
 
-1419307303 e:\projekty\dragon\lib\\cddebug.h
+1420554388 e:\projekty\dragon\lib\\cddebug.h
 	<cstdio>
+	<string>
+
+1420554369 source:e:\projekty\dragon\lib\cddebug.cpp
+	"CDDebug.h"
+
+1420554388 e:\projekty\dragon\lib\cddebug.h
+	<cstdio>
+	<string>
 

@@ -47,6 +47,18 @@ std::string TB_Oddzial::getCompactAllRow(TypeStorage typeStorage)
     }
 }
 
+std::string TB_Oddzial::getAllRowIdFirmy(int id_firma, TypeStorage typeStorage)
+{
+    if (typeStorage == TYPE_STORAGE_SQLITE3)
+    {
+        return "select * from Oddzial where Oddzial.id_Firma = " + intToString(id_firma);
+    }
+    else
+    {
+        return "ERROR_TYPE_STORAGE";
+    }
+}
+
 std::string TB_Oddzial::addRow()
 {
     if (m_typeStorage == TYPE_STORAGE_SQLITE3)
