@@ -728,7 +728,7 @@ BOOL CALLBACK DlgZakupy(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
             ListView_InsertColumn(listview , 1, & lvc );
 
             lvc.iSubItem = 2;
-            lvc.cx = 50;
+            lvc.cx = 250;
             lvc.pszText = const_cast<char*>( "Produkt");
             ListView_InsertColumn(listview , 2, & lvc );
 
@@ -743,12 +743,12 @@ BOOL CALLBACK DlgZakupy(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
             ListView_InsertColumn(listview , 4, & lvc );
 
             lvc.iSubItem = 5;
-            lvc.cx = 50;
+            lvc.cx = 70;
             lvc.pszText = const_cast<char*>( "Data waznosci");
             ListView_InsertColumn(listview , 5, & lvc );
 
             lvc.iSubItem = 6;
-            lvc.cx = 50;
+            lvc.cx = 70;
             lvc.pszText = const_cast<char*>( "Data zakupu");
             ListView_InsertColumn(listview , 6, & lvc );
 
@@ -984,7 +984,7 @@ BOOL CALLBACK DlgDodajZakupyMulti(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM
                 ListView_InsertColumn(listview , 2, & lvc );
 
                 lvc.iSubItem = 3;
-                lvc.cx = 70;
+                lvc.cx = 90;
                 lvc.pszText = const_cast<char*>( "Data waznosci");
                 ListView_InsertColumn(listview , 3, & lvc );
 
@@ -1103,6 +1103,17 @@ BOOL CALLBACK DlgDodajZakupyMulti(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM
                         EndDialog(hwndDlg, IDOK);
                         break;
                     }
+                case DLG_DODAJ_ZAKUP1_BUTTON_USUN:
+                    {
+                        HWND hListView = GetDlgItem(hwndDlg, DLG_DODAJ_ZAKUP1_LISTVIEW);
+                        int iPos = ListView_GetNextItem(hListView, -1, LVNI_SELECTED);
+                        while (iPos != -1) {
+                            SendMessage(hListView,LVM_DELETEITEM,iPos,0);
+                            listaZakupow.erase(listaZakupow.begin()+iPos);
+                            iPos = ListView_GetNextItem(hListView, iPos, LVNI_SELECTED);
+                        }
+                        break;
+                    }
                 case DLG_DODAJ_ZAKUP1_BUTTON_DODAJ:
                     {
                         int id_firmy = 0;
@@ -1139,8 +1150,14 @@ BOOL CALLBACK DlgDodajZakupyMulti(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM
                         LVITEM lvi;
                         lvi.mask = LVIF_TEXT;
                         int indexItem = ListView_GetItemCount(listview);
-
-                        lvi.pszText = const_cast<char*>((std::string("prodult")).c_str());
+                        std::string name = "not name";
+                        TB_Row row;
+                        CDModels::getInstance().GetCompactProdukt( id_produktu , row);
+                        if (row.size() > 0 )
+                        {
+                            name = row[0];
+                        }
+                        lvi.pszText = const_cast<char*>(name.c_str());
                         lvi.iItem = indexItem;
                         lvi.iSubItem = 0;
                         ListView_InsertItem( listview, & lvi );

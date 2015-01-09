@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1420556395 source:e:\projekty\dragon\dragon-shop\main.cpp
+1420568570 source:e:\projekty\dragon\dragon-shop\main.cpp
 	<windows.h>
 	<commctrl.h>
 	<stdio.h>
@@ -13,7 +13,7 @@
 
 1420561152 e:\projekty\dragon\dragon-shop\resource.h
 
-1420560726 source:e:\projekty\dragon\dragon-shop\resource.rc
+1420561152 source:e:\projekty\dragon\dragon-shop\resource.rc
 	<windows.h>
 	<commctrl.h>
 	<richedit.h>
@@ -46,7 +46,7 @@
 	<cstring>
 	<windows.h>
 
-1420557959 source:e:\projekty\dragon\dragon-shop\cdmodels.cpp
+1420562458 source:e:\projekty\dragon\dragon-shop\cdmodels.cpp
 	<windows.h>
 	<Commctrl.h>
 	"CDModels.h"
@@ -56,7 +56,7 @@
 	"CDTools.h"
 	"resource.h"
 
-1420386676 e:\projekty\dragon\dragon-shop\cdmodels.h
+1420562458 e:\projekty\dragon\dragon-shop\cdmodels.h
 	<windows.h>
 	<IDataTable.h>
 	<CDStorage.h>
@@ -113,7 +113,7 @@
 	"TB_Zakup.h"
 	"CDTools.h"
 
-1420399489 e:\projekty\dragon\dragon-shop\tb_zakup.h
+1420645561 e:\projekty\dragon\dragon-shop\tb_zakup.h
 	"IDataTable.h"
 
 1420385210 source:e:\projekty\dragon\dragon-shop\tb_oddzial.cpp

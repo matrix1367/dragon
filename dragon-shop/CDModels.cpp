@@ -221,6 +221,24 @@ bool CDModels::GetCompactProdukt(TB_Row & result)
     }
 }
 
+bool CDModels::GetCompactProdukt(int id_produkt, TB_Row & result)
+{
+    if(m_storage != NULL)
+    {
+        TB_Result tb_result;
+        m_storage->QueryStorage(TB_Produkt::getAllRow( CDSettingApp::getInstance().GetSettingData().typeStorage), tb_result);
+        for (TB_Result::iterator it= tb_result.begin(); it != tb_result.end(); it++)
+        {
+           if (id_produkt == stringToInt((*it)[TB_Produkt::CIP_ID])) result.push_back((*it)[TB_Produkt::CIP_NAME]);
+        }
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 bool CDModels::GetUniqueCity(std::vector< std::string> & result)
 {
     if(m_storage != NULL)

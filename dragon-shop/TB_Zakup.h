@@ -34,6 +34,7 @@ class TB_Zakup : public IDataTable
         float m_ilosc;
         std::string m_data_waznosci;
         std::string m_data_zakupu;
+        int m_produkt_nazwa_paragon;
         TypeStorage m_typeStorage;
 };
 

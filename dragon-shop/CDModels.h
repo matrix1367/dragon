@@ -22,6 +22,7 @@ class CDModels
         bool GetCompactFirmy(TB_Row & row);
         bool GetCompactOddzial(int id_firmy, TB_Row & row);
         bool GetCompactProdukt(TB_Row & row);
+        bool GetCompactProdukt(int id_product,  TB_Row & row);
         bool GetUniqueCity(std::vector< std::string> & result);
         bool SetDataInTable(HWND hwndDlg, Tabels table);
         void OnExit();
