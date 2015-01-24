@@ -661,6 +661,67 @@ BOOL CALLBACK DlgProdukty(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 }
 
 
+BOOL CALLBACK DlgDodajProdukty(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+    switch(uMsg)
+    {
+        case WM_INITDIALOG:
+        {
+            HWND HWNDcombo = GetDlgItem(hwndDlg, DLG_DODAJ_PRODUKT_IDC_COMBO1);
+            SendMessage(HWNDcombo,  CB_ADDSTRING, 0, reinterpret_cast<LPARAM>((LPCTSTR)("kg")));
+            SendMessage(HWNDcombo,  CB_ADDSTRING, 0, reinterpret_cast<LPARAM>((LPCTSTR)("sztuk")));
+            SendMessage(HWNDcombo,  CB_SETCURSEL, 0, 0);
+            break;
+        }
+        return true;
+
+        case WM_SIZE:
+        {
+            break;
+        }
+        return TRUE;
+
+        case WM_CLOSE:
+        {
+            EndDialog(hwndDlg, IDCANCEL);
+            break;
+        }
+        return TRUE;
+
+        case WM_COMMAND:
+        {
+            switch(LOWORD(wParam))
+            {
+                case IDCANCEL:
+                {
+                      EndDialog(hwndDlg, IDCANCEL);
+                     break;
+                }
+                case IDOK:
+                {
+                    std::string name;
+                    std::string jednostka;
+                    std::string fileName;
+                    if (GetTextFromEdit(hwndDlg,  DLG_DODAJ_PRODUKT_IDC_EDIT1, name))
+                    {
+                        GetTextFromEdit(hwndDlg,  DLG_DODAJ_PRODUKT_IDC_COMBO1, jednostka);
+                        GetTextFromEdit(hwndDlg,  DLG_DODAJ_PRODUKT_IDC_EDIT2, fileName);
+                        HWND checkBox = GetDlgItem(hwndDlg, DLG_DODAJ_PRODUKT_IDC_CHECKBOX1);
+                        int dwPos = SendMessage(checkBox, BM_GETCHECK, 0, 0);
+                        //std::string name, std::string unit, int term, std::string nameFile, TypeStorage typeStorage
+                        TB_Produkt produkt(name, jednostka , dwPos, fileName, CDSettingApp::getInstance().GetSettingData().typeStorage);
+                        CDModels::getInstance().AddDataToTable(&produkt);
+                        EndDialog(hwndDlg, IDOK);
+                    }
+                    break;
+                }
+            }
+        }
+        return TRUE;
+    }
+    return FALSE;
+}
+
 BOOL CALLBACK DlgProdukt(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     switch(uMsg)
@@ -699,6 +760,7 @@ BOOL CALLBACK DlgProdukt(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
     }
     return FALSE;
 }
+
 
 
 BOOL CALLBACK DlgZakupy(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
