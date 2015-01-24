@@ -16,6 +16,7 @@ class CDModels
 
         int Init();
         bool AddDataToTable(IDataTable* dataTable);
+        bool AddDataToTableBinary(IDataTable* dataTable, std::string nameFile);
         bool GetAllRow(Tabels table, TB_Result& result);
         int ConvertIndexCBToId(int indexCB, Tabels table);
         bool GetCompactLocation(std::vector<std::string> & result);

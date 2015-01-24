@@ -37,6 +37,7 @@
 #define DLG_ZAKUPY                              137
 #define IDI_ICON1                               138
 #define DLG_DODAJ_ZAKUP1                        139
+#define DLG_PRODUKT                             141
 #define DLG_DODAJ_ODDZIAL_IDC_COMBO2            1000
 #define DLG_DODAJ_ODDZIAL_IDC_EDIT1             1002
 #define DLG_DODAJ_LOKALIZACJE_IDC_EDIT1         1004
@@ -52,6 +53,7 @@
 #define IDM_DODAJ_ODDZIA_1                      40000
 #define IDM_DODAJ_PRODUKT1                      40000
 #define IDM_DODAJ_ZAKUP1                        40000
+#define ID_MAINMENU_SHOP_PRODUKT                40000
 #define DLG_DODAJ_PRODUKT_IDC_EDIT1             40001
 #define DLG_DODAJ_ZAKUP1_DATA_ZAKUPU            40001
 #define DLG_DODAJ_ZAKUP_COMBOBOX_ODDZIAL        40001
@@ -59,6 +61,7 @@
 #define DLG_DODAJ_PRODUKT_IDC_CHECKBOX1         40002
 #define DLG_DODAJ_ZAKUP1_EDIT_ILOSC             40002
 #define DLG_DODAJ_ZAKUP_COMBOBOX_PRODUKT        40002
+#define DLG_DODAJ_PRODUKT_IDC_EDIT2             40003
 #define DLG_DODAJ_ZAKUP1_DATA_WAZNOSCI          40003
 #define DLG_DODAJ_ZAKUP_EDIT_CENA               40003
 #define DLG_DODAJ_ZAKUP1_EDIT_CENA              40004

@@ -78,6 +78,17 @@ bool CDModels::AddDataToTable(IDataTable * dataTable)
     return false;
 }
 
+bool CDModels::AddDataToTableBinary(IDataTable* dataTable, std::string nameFile)
+{
+    TB_Result result;
+    if(m_storage != NULL)
+    {
+        m_storage->QueryStorage(dataTable->addRow(), nameFile, result);
+        return true;
+    }
+    return false;
+}
+
 CDModels::CDModels(CDModels const&)
 {
 

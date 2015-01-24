@@ -21,6 +21,7 @@ BOOL CALLBACK DlgDodajOddzialy(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 BOOL CALLBACK DlgLokalizacje(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK DlgDodajLokalizacje(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK DlgProdukty(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK DlgProdukt(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK DlgDodajProdukty(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK DlgZakupy(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK DlgDodajZakupy(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -120,6 +121,11 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
         case ID_MAINMENU_SHOP_PRODUKTY:
             {
                 DialogBox(hInst, MAKEINTRESOURCE(DLG_PRODUKTY), NULL, (DLGPROC)DlgProdukty);
+                break;
+            }
+        case ID_MAINMENU_SHOP_PRODUKT:
+            {
+                DialogBox(hInst, MAKEINTRESOURCE(DLG_PRODUKT), NULL, (DLGPROC)DlgProdukt);
                 break;
             }
         case ID_MAINMENU_SHOP_ZAKUPY:
@@ -654,23 +660,26 @@ BOOL CALLBACK DlgProdukty(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
     return FALSE;
 }
 
-BOOL CALLBACK DlgDodajProdukty(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
+
+BOOL CALLBACK DlgProdukt(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     switch(uMsg)
     {
         case WM_INITDIALOG:
         {
-            HWND HWNDcombo = GetDlgItem(hwndDlg, DLG_DODAJ_PRODUKT_IDC_COMBO1);
-
-            SendMessage(HWNDcombo,  CB_ADDSTRING, 0, reinterpret_cast<LPARAM>((LPCTSTR)("kg")));
-            SendMessage(HWNDcombo,  CB_ADDSTRING, 0, reinterpret_cast<LPARAM>((LPCTSTR)("sztuk")));
-            SendMessage(HWNDcombo,  CB_SETCURSEL, 0, 0);
+            break;
         }
-        return TRUE;
+        return true;
+
+        case WM_SIZE:
+        {
+            break;
+        }
 
         case WM_CLOSE:
         {
-            EndDialog(hwndDlg, IDCANCEL);
+            EndDialog(hwndDlg, 0);
+            break;
         }
         return TRUE;
 
@@ -678,33 +687,19 @@ BOOL CALLBACK DlgDodajProdukty(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lP
         {
             switch(LOWORD(wParam))
             {
-                case IDCANCEL:
+                case ID_MAINMENU_PRODUKTY_EXIT:
                 {
-                     EndDialog(hwndDlg, IDCANCEL);
+                     EndDialog(hwndDlg, 0);
                      break;
                 }
-                case IDOK:
-                {
-                    std::string name;
-                    std::string jednostka;
 
-                    if (GetTextFromEdit(hwndDlg,  DLG_DODAJ_PRODUKT_IDC_EDIT1, name))
-                    {
-                        GetTextFromEdit(hwndDlg,  DLG_DODAJ_PRODUKT_IDC_COMBO1, jednostka);
-                        HWND checkBox = GetDlgItem(hwndDlg, DLG_DODAJ_PRODUKT_IDC_CHECKBOX1);
-                        int dwPos = SendMessage(checkBox, BM_GETCHECK, 0, 0);
-                        TB_Produkt produkt(name, jednostka , dwPos, CDSettingApp::getInstance().GetSettingData().typeStorage);
-                        CDModels::getInstance().AddDataToTable(&produkt);
-                        EndDialog(hwndDlg, IDOK);
-                    }
-                    break;
-                }
             }
         }
         return TRUE;
     }
     return FALSE;
 }
+
 
 BOOL CALLBACK DlgZakupy(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {

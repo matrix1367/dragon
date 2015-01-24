@@ -5,8 +5,8 @@
 class TB_Produkt : public IDataTable
 {
     public:
-        enum CIP {CIP_ID, CIP_NAME, CIP_UNIT, CIP_TERM};
-        TB_Produkt(std::string name, std::string unit,  int term,  TypeStorage typeStorage);
+        enum CIP {CIP_ID, CIP_NAME, CIP_UNIT, CIP_TERM, CIP_PHOTO};
+        TB_Produkt(std::string name, std::string unit,  int term, std::string nameFile,  TypeStorage typeStorage);
         virtual ~TB_Produkt();
         static std::string createTableStr(TypeStorage typeStorage);
         static std::string getAllRow(TypeStorage typeStorage);
@@ -18,6 +18,7 @@ class TB_Produkt : public IDataTable
         std::string m_name;
         std::string m_unit;
         int m_term;
+        std::string m_nameFile;
         TypeStorage m_typeStorage;
 };
 

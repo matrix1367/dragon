@@ -1,7 +1,7 @@
 #include "TB_Produkt.h"
 #include "CDTools.h"
 
-TB_Produkt::TB_Produkt(std::string name, std::string unit, int term, TypeStorage typeStorage) : m_name(name), m_unit(unit), m_term(term), m_typeStorage(typeStorage)
+TB_Produkt::TB_Produkt(std::string name, std::string unit, int term, std::string nameFile, TypeStorage typeStorage) : m_name(name), m_unit(unit), m_term(term), m_nameFile(nameFile), m_typeStorage(typeStorage)
 {
     //ctor
 }
@@ -15,7 +15,7 @@ std::string TB_Produkt::createTableStr(TypeStorage typeStorage)
 {
     if (typeStorage == TYPE_STORAGE_SQLITE3)
     {
-        return "CREATE TABLE Produkt(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, unit TEXT, term INTEGER);";
+        return "CREATE TABLE Produkt(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, unit TEXT, term INTEGER, photo BLOB);";
     }
     else
     {
@@ -39,7 +39,7 @@ std::string TB_Produkt::addRow()
 {
     if (m_typeStorage == TYPE_STORAGE_SQLITE3)
     {
-        return "INSERT INTO Produkt (name, unit, term) VALUES('" + m_name +"' , '" + m_unit+ "' , " + intToString(m_term) +")";
+        return "INSERT INTO Produkt (name, unit, term, photo) VALUES('" + m_name +"' , '" + m_unit+ "' , " + intToString(m_term) + ", ?" +")";
     }
     else
     {

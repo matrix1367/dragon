@@ -10,6 +10,7 @@ public :
     virtual int Open() = 0;
     virtual int Close() = 0;
     virtual int Query(const std::string msq, std::vector< std::vector < std::string > > & result) = 0;
+    virtual int Query(const std::string msq, const std::string nameFile, std::vector< std::vector < std::string > > & result) = 0;
     virtual int IsExist(bool& isExist) = 0;
     virtual bool IsFirstOpen() = 0;
 };

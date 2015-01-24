@@ -14,6 +14,7 @@ public:
     inline int GetIdStorage() { return m_id; }
     inline std::string GetFileName() { return m_fileDB; }
     inline int QueryStorage(const std::string msq, TB_Result & result) { return m_dataBase->Query(msq, result);}
+    inline int QueryStorage(const std::string msq, const std::string fileName, TB_Result & result) { return m_dataBase->Query(msq, fileName, result);}
     int IsExistBD(bool & isExist);
     int IsFirstOpen(bool& isExist);
 protected:

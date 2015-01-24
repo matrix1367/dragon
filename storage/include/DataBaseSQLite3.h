@@ -12,6 +12,7 @@ class DataBaseSQLite3 : public IDataBase
         int Open() ;
         int Close() ;
         int Query(const std::string msq, std::vector< std::vector < std::string > > & result) ;
+        int Query(const std::string msq, const std::string nameFile, std::vector< std::vector < std::string > > & result);
         int IsExist(bool& isExist);
         bool IsFirstOpen() { return m_firstOpen; }
     protected:
