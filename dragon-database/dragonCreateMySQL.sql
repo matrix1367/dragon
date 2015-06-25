@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS tb_city (
 )
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
+);
 
 /**
 * key
@@ -41,17 +42,11 @@ CREATE TABLE IF NOT EXISTS tb_shop (
 
 
 
-
-
 /*
 * insert simple data
 */
 
 INSERT INTO tb_city (cityid, name) VALUES (1, 'Poznań');
 INSERT INTO tb_location (locationid, street, nrHome, nrLocal, zipCode, cityid) VALUES (1, 'Katowicka', '53', 'A', '61-131', 1);
-
-
-
-
 
 
