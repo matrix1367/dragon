@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS tb_city (
 )
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
-);
+;
 
 /**
 * key
