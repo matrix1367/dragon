@@ -10,7 +10,7 @@ and open the template in the editor.
 
 body {
     margin: 0px 0px;
-    background-color: #f3f5f5;
+    background-color: #f2f0f1;
 }
 
 .header {
@@ -29,5 +29,5 @@ body {
 }
 
 .contentPage {
-    background-color: #f3f5f5
+    background-color: #f2f0f1;
 }
